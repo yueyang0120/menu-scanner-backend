@@ -12,7 +12,7 @@ from openai import OpenAI
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Menu Scanner Backend", version="1.0.2")
+app = FastAPI(title="Menu Scanner Backend", version="1.0.3")
 
 # CORS middleware for your iOS app
 app.add_middleware(
@@ -33,21 +33,8 @@ BACKEND_API_SECRET = os.getenv("BACKEND_API_SECRET", "your-secret-key")
 if not OPENAI_API_KEY:
     raise ValueError("Missing OPENAI_API_KEY in environment variables")
 
-# Initialize OpenAI client (disable proxy auto-detection)
-# Clear proxy environment variables that might interfere
-proxy_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy']
-original_proxy_values = {}
-for var in proxy_vars:
-    if var in os.environ:
-        original_proxy_values[var] = os.environ[var]
-        del os.environ[var]
-
-try:
-    openai_client = OpenAI(api_key=OPENAI_API_KEY)
-finally:
-    # Restore proxy environment variables if they existed
-    for var, value in original_proxy_values.items():
-        os.environ[var] = value
+# Initialize OpenAI client
+openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Data models with detailed field descriptions
 class MenuAnalysisRequest(BaseModel):
