@@ -12,7 +12,7 @@ from openai import OpenAI
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Menu Scanner Backend", version="1.0.0")
+app = FastAPI(title="Menu Scanner Backend", version="1.0.1")
 
 # CORS middleware for your iOS app
 app.add_middleware(
